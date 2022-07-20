@@ -55,22 +55,47 @@ VALUES (NULL, 'Meier', 'Sven', @SchuelerStraße, @SchuelerPlz, @SchuelerOrt, '20
 ```
 
 ## Übung 3
-Die Fächer **Latein, Deutsch, PC und Automatisierung** werden von **Jakob Volker** übernommen. Nutzt für die Fächer Variablen.
+Die Fächer **'Deutsch' und 'PC und Automatisierung'** werden von **Jakob Volker** übernommen. Nutzt für die Fächer Variablen.
 
 ```sql
+-- Change Deutsch
+SET @LehrtFach = 'Deutsch';
+SET @LehrtNachname = 'Jakob';
+SET @LehrtVorname = 'Volker';
 
+UPDATE `Lehrt` SET `ID_Lehrer` = (SELECT `ID_Lehrer` FROM `Lehrer` WHERE `Nachname` = @LehrtNachname AND `Vorname` = @LehrtVorname) WHERE `ID_Fach` = (SELECT `ID_Fach` FROM `Fach` WHERE `Bezeichnung` = @LehrtFach);
+
+-- Change PC und Automatisierung
+SET @LehrtFach = 'PC und Automatisierungstechnik';
+SET @LehrtNachname = 'Jakob';
+SET @LehrtVorname = 'Volker';
+
+
+UPDATE `Lehrt` SET `ID_Lehrer` = (SELECT `ID_Lehrer` FROM `Lehrer` WHERE `Nachname` = @LehrtNachname AND `Vorname` = @LehrtVorname) WHERE `ID_Fach` = (SELECT `ID_Fach` FROM `Fach` WHERE `Bezeichnung` = @LehrtFach);
 ```
 
 ## Übung 4
-Nach einer Lehrer Konferenz kann Herr Volker das Fach **PC und Automatisierung** doch nicht übernehmen und wird wieder von **Paffler Markus** übernommen.
+Nach einer Lehrer Konferenz kann Herr Volker das Fach **PC und Automatisierungstechnik** doch nicht übernehmen und wird wieder von **Paffler Markus** übernommen.
 
 ```sql
+SET @LehrtFach = 'PC und Automatisierungstechnik';
+SET @LehrtNachname = 'Paffler';
+SET @LehrtVorname = 'Markus';
 
+
+UPDATE `Lehrt` SET `ID_Lehrer` = (SELECT `ID_Lehrer` FROM `Lehrer` WHERE `Nachname` = @LehrtNachname AND `Vorname` = @LehrtVorname) WHERE `ID_Fach` = (SELECT `ID_Fach` FROM `Fach` WHERE `Bezeichnung` = @LehrtFach);
 ```
 
 ## Übung 5
 Wegen einem Kommunikationsfehler wurde der Schule die Falsche Postleitzahl für die neuen Schüler mitgeteilt. Ändere die Postleitzahl der neuen Schüler auf 55599.
 
 ```sql
+-- Overwrite @SchuelerPlz to '55599'
+SET @SchuelerPlz = '55599';
 
+-- Update entrys
+UPDATE `Schueler` SET `PLZ` = @SchuelerPlz WHERE `Schueler`.`Nachname` = 'Peters' AND `Schueler`.`Vorname` = 'Frank';
+UPDATE `Schueler` SET `PLZ` = @SchuelerPlz WHERE `Schueler`.`Nachname` = 'Söder' AND `Schueler`.`Vorname` = 'Markus';
+UPDATE `Schueler` SET `PLZ` = @SchuelerPlz WHERE `Schueler`.`Nachname` = 'Schmidt' AND `Schueler`.`Vorname` = 'Albrecht';
+UPDATE `Schueler` SET `PLZ` = @SchuelerPlz WHERE `Schueler`.`Nachname` = 'Meier' AND `Schueler`.`Vorname` = 'Sven';
 ```
