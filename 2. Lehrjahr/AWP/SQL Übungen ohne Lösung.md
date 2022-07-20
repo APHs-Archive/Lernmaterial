@@ -2,7 +2,9 @@
 
 Die Struktur für eine Variable sieht folgendermaßen aus:
 ```sql
-DECLARE @VariableName DataType
+DECLARE @VariableName AS VARCHAR(100);
+SET @VariableName = 'Value';
+PRINT @VariableName;
 ```
 
 Du kannst Daten in Variablen schreiben, indem du **SET**, **SELECT** verwendest oder sie **=** auf etwas setzt..
